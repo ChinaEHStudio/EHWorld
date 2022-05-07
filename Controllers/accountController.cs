@@ -1,11 +1,7 @@
-﻿using EHWorld.Models;
+﻿using EHWorld.Data;
+using EHWorld.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using EHWorld.Data;
-using System.IO;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System;
 
 namespace EHWorld.Controllers
 {
@@ -20,20 +16,20 @@ namespace EHWorld.Controllers
             _context = context;
         }
         [HttpPost]
-        public string reg()
+        public async Task<string> reg()
         {
-       
-                StreamReader sr = new StreamReader(Request.Body);
 
-                string body = sr.ReadToEndAsync().Result;
-                JObject job = JObject.Parse(body);
-                var account = new Account() { username = job["username"].ToString(), email = job["email"].ToString(), password = job["pass"].ToString() };
-                _context.Accounts.Add(account);
-                _context.SaveChanges();
-                return "successlly";
+
+            StreamReader sr = new StreamReader(Request.Body);
+            string body = sr.ReadToEndAsync().Result;
+            JObject job = JObject.Parse(body);
+            Account? account = new Account() { username = job["username"].ToString(), email = job["email"].ToString(), password = job["pass"].ToString() };
+            _context.Accounts.Add(account);
+            await _context.SaveChangesAsync();
+            return "successlly";
 
         }
-       
+
         [HttpPost]
         public string log()
         {
@@ -48,34 +44,23 @@ namespace EHWorld.Controllers
 
 
 
-            var account = _context.Accounts.Single(s => s.email == job["email"].ToString());
-            if (account == null) return "NotFound Account";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            Account? account = _context.Accounts.Single(s => s.email == job["email"].ToString());
+            if (account == null)
+            {
+                return "NotFound Account";
+            }
 
             if (account.password == job["pass"].ToString())
             {
-                account.uuiduser=Guid.NewGuid().ToString();
+                account.uuiduser = Guid.NewGuid().ToString();
                 _context.Accounts.Update(account);
 
                 _context.SaveChanges();
 
-                var accoun = _context.Accounts.Find(account.Id);
+                Account? accoun = _context.Accounts.Find(account.Id);
 
                 return accoun.uuiduser;
-            } 
+            }
             return "faild to login";
         }
         public string test()

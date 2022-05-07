@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using EHWorld.Models;
+﻿using EHWorld.Models;
+using Microsoft.EntityFrameworkCore;
 namespace EHWorld.Data
 {
     public class EhWorldContext : DbContext
@@ -11,11 +11,11 @@ namespace EHWorld.Data
 
         public DbSet<Account> Accounts { get; set; } //22:17
 
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>().ToTable("Account");
         }
-        
+
     }
 }
