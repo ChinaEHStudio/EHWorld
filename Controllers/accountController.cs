@@ -6,6 +6,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace EHWorld.Controllers
 {
@@ -22,7 +23,6 @@ namespace EHWorld.Controllers
         [HttpPost]
         public string reg()
         {
-       
                 StreamReader sr = new StreamReader(Request.Body);
 
                 string body = sr.ReadToEndAsync().Result;
@@ -35,35 +35,15 @@ namespace EHWorld.Controllers
         }
        
         [HttpPost]
-        public string log()
+        public async Task<string> logAsync()
         {
             StreamReader sr = new StreamReader(Request.Body);
 
             string body = sr.ReadToEndAsync().Result;
             JObject job = JObject.Parse(body);
 
-
-
-
-
-
-
-            var account = _context.Accounts.Single(s => s.email == job["email"].ToString());
+            var account =  await _context.Accounts.FirstOrDefaultAsync(s => s.email == job["email"].ToString());
             if (account == null) return "NotFound Account";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             if (account.password == job["pass"].ToString())
             {
