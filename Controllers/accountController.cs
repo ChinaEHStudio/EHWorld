@@ -2,6 +2,12 @@
 using EHWorld.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+<<<<<<< HEAD
+=======
+using Newtonsoft.Json;
+using System;
+using Microsoft.EntityFrameworkCore;
+>>>>>>> 2b12a359d33c47877d9b5d9ed1342de1ac65e614
 
 namespace EHWorld.Controllers
 {
@@ -18,6 +24,10 @@ namespace EHWorld.Controllers
         [HttpPost]
         public async Task<string> reg()
         {
+<<<<<<< HEAD
+=======
+                StreamReader sr = new StreamReader(Request.Body);
+>>>>>>> 2b12a359d33c47877d9b5d9ed1342de1ac65e614
 
 
             StreamReader sr = new StreamReader(Request.Body);
@@ -31,13 +41,14 @@ namespace EHWorld.Controllers
         }
 
         [HttpPost]
-        public string log()
+        public async Task<string> logAsync()
         {
             StreamReader sr = new StreamReader(Request.Body);
 
             string body = sr.ReadToEndAsync().Result;
             JObject job = JObject.Parse(body);
 
+<<<<<<< HEAD
 
 
 
@@ -49,6 +60,10 @@ namespace EHWorld.Controllers
             {
                 return "NotFound Account";
             }
+=======
+            var account =  await _context.Accounts.FirstOrDefaultAsync(s => s.email == job["email"].ToString());
+            if (account == null) return "NotFound Account";
+>>>>>>> 2b12a359d33c47877d9b5d9ed1342de1ac65e614
 
             if (account.password == job["pass"].ToString())
             {
