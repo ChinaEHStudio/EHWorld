@@ -24,6 +24,15 @@ namespace EHWorld.Controllers
 
                 string body = sr.ReadToEndAsync().Result;
                 JObject job = JObject.Parse(body);
+                MailSend? email = new MailSend();
+                try
+                {
+                    Random random = new Random();
+                    Byte[] b = new Byte[13];
+                    email.sendmail("验证码:", job["username"].ToString());
+                    return "successlly to send email";
+                }
+                catch (Exception) { return "faild to send"; }
                 Account? account = new Account() { username = job["username"].ToString(), email = job["email"].ToString(), password = job["pass"].ToString(), uuiduser = Guid.NewGuid().ToString() };
                 _context.Accounts.Add(account);
                 await _context.SaveChangesAsync();
@@ -75,18 +84,6 @@ namespace EHWorld.Controllers
                 return ex.Message;
             }
         }
-        public string test()
-        {
-            MailSend? email = new MailSend();
-            try
-            {
-                email.sendmail("test", "1726016497@qq.com");
-                return "successlly to send email";
-            }
-            catch (Exception) { return "faild to send"; }
 
-
-
-        }
     }
 }
