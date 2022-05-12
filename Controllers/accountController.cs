@@ -84,6 +84,11 @@ namespace EHWorld.Controllers
                 return ex.Message;
             }
         }
+        public string test()
+        {
+            MailSend mailSend = new MailSend();
+            return mailSend.random_str();
+        }
 
     }
 }
