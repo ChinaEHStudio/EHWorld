@@ -27,9 +27,10 @@ namespace EHWorld.Controllers
                 MailSend? email = new MailSend();
                 try
                 {
-                    Random random = new Random();
-                    Byte[] b = new Byte[13];
-                    email.sendmail("验证码:", job["username"].ToString());
+                    MailSend mailSend = new MailSend();
+                    string n = mailSend.random_str();
+
+                    email.sendmail(n, job["email"].ToString());
                     return "successlly to send email";
                 }
                 catch (Exception) { return "faild to send"; }
@@ -83,11 +84,6 @@ namespace EHWorld.Controllers
             {
                 return ex.Message;
             }
-        }
-        public string test()
-        {
-            MailSend mailSend = new MailSend();
-            return mailSend.random_str();
         }
 
     }
