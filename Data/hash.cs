@@ -7,7 +7,6 @@ using System.Text;
 namespace EHWorld.Models
 {
     public class hash {
-
         private String key;
         public hash(String key)
         {
