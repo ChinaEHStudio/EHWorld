@@ -9,6 +9,18 @@
         public string email { get; set; }
         public string? uuiduser { get; set; }
 
+        
+
+
+
+
+
+
+
+
+
+       // public string? vernum { get; set; }
+
 
     }
 }

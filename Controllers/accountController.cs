@@ -14,16 +14,306 @@ namespace EHWorld.Controllers
         {
             _context = context;
         }
+
+
+        public  string getvn(string email)
+        {
+            MailSend send = new MailSend();
+            string n=send.random_str();
+
+
+
+
+
+
+
+
+
+
+
+            Vnu checkac = _context.Vnumbers.FirstOrDefault(s => s.email == email);
+            if (checkac != null)
+            {
+                checkac.vnumb = hash(n);
+                _context.Vnumbers.Update(checkac);
+                _context.SaveChanges();
+           //     return hash(n);
+            }
+            else
+            {
+                var vn = new Vnu() { email = email, vnumb = hash(n) };
+                _context.Vnumbers.Add(vn);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                _context.SaveChanges();
+            }
+           
+
+
+
+
+
+
+
+
+
+
+            send.sendmail(n,email);
+            return hash(n);
+
+        }
+        /*public string getnum(string email)
+        {
+            MailSend send = new MailSend();
+            string n = send.random_str();
+            send.sendmail(n, email);
+            Vnumber vnumber = new Vnumber()
+            {
+                email = email,
+                dateTime = DateTime.Now,
+                vnumber = hash(n)
+            };
+            return hash(n);
+
+        }*/
+
         [HttpPost]
         public async Task<string> reg()
         {
-            try
-            {
+         //   try
+         //   {
 
                 StreamReader sr = new StreamReader(Request.Body);
 
                 string body = sr.ReadToEndAsync().Result;
                 JObject job = JObject.Parse(body);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                Vnu checkac = _context.Vnumbers.FirstOrDefault(s => s.email == job["email"].ToString());
+                if (checkac == null) return "not found vn";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Console.WriteLine("successlly");
+                if (checkac.vnumb != hash(job["vernumber"].ToString())) return "vnumber error"; 
+                /*
                 MailSend? email = new MailSend();
                 try
                 {
@@ -31,18 +321,20 @@ namespace EHWorld.Controllers
                     string n = mailSend.random_str();
 
                     email.sendmail(n, job["email"].ToString());
-                    return "successlly to send email";
+                    return hash(n);
                 }
-                catch (Exception) { return "faild to send"; }
+                catch (Exception) { return "faild to send"; } */
+              //  Account account_check=_context
+
                 Account? account = new Account() { username = job["username"].ToString(), email = job["email"].ToString(), password = job["pass"].ToString(), uuiduser = Guid.NewGuid().ToString() };
                 _context.Accounts.Add(account);
                 await _context.SaveChangesAsync();
                 return account.uuiduser;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
+      //      }
+      //      catch (Exception ex)
+         //   {
+          //      return ex.Message;
+         //   }
 
         }
 
@@ -84,6 +376,12 @@ namespace EHWorld.Controllers
             {
                 return ex.Message;
             }
+        }
+
+        public string hash(string word)
+        {
+            var h = new Hash("salt");
+            return h.ApplyHash(word);
         }
 
     }

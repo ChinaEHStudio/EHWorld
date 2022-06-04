@@ -4,6 +4,7 @@ using EHWorld.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EHWorld.Migrations
 {
     [DbContext(typeof(EhWorldContext))]
-    partial class EhWorldContextModelSnapshot : ModelSnapshot
+    [Migration("20220603114950_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,25 +50,15 @@ namespace EHWorld.Migrations
                     b.Property<string>("uuiduser")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("vn")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Account", (string)null);
                 });
 
-            modelBuilder.Entity("EHWorld.Models.Test", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Test", (string)null);
-                });
-
-            modelBuilder.Entity("EHWorld.Models.Vnu", b =>
+            modelBuilder.Entity("EHWorld.Models.Vnumber", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +73,7 @@ namespace EHWorld.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("vnumb")
+                    b.Property<string>("vnumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
