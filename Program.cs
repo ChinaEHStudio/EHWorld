@@ -1,6 +1,18 @@
 using EHWorld.Data;
 using Microsoft.EntityFrameworkCore;
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("https://ehworld20220702211431.azurewebsites.net/",
+                                              "https://ehworld-web.vercel.app");
+                      });
+});
+
 builder.Services.AddDbContext<EhWorldContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("EhWorldContext")));
 
@@ -36,6 +48,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
