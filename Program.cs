@@ -8,7 +8,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
                       policy =>
                       {
-                          policy.AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
+                          policy.AllowAnyMethod().AllowCredentials().WithOrigins("https://ehworld-web.vercel.app");
                       });
 });
 
