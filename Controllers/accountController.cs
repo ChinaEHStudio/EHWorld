@@ -15,7 +15,7 @@ namespace EHWorld.Controllers
             _context = context;
         }
 
-
+        
         public  string getvn(string email)
         {
             MailSend send = new MailSend();
@@ -91,8 +91,9 @@ namespace EHWorld.Controllers
          //   }
 
         }
-
+      
         [HttpPost]
+        
         public async Task<string> logAsync()
         {
             try

@@ -1,15 +1,14 @@
 using EHWorld.Data;
 using Microsoft.EntityFrameworkCore;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-var builder = WebApplication.CreateBuilder(args);
+//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins"; 
+var builder = WebApplication.CreateBuilder(args); 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddDefaultPolicy(
                       policy =>
                       {
-                          policy.WithOrigins("https://ehworld20220702211431.azurewebsites.net/",
-                                              "https://ehworld-web.vercel.app");
+                          policy.AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
                       });
 });
 
@@ -34,6 +33,7 @@ else
     app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 }
+app.UseCors();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -48,7 +48,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseCors(MyAllowSpecificOrigins);
+
 
 app.UseAuthorization();
 
