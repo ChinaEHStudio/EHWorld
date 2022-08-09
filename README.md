@@ -1,6 +1,4 @@
-﻿[TOC]
-
-# EHWorld
+﻿# EHWorld
 
 
 A simple sandbox web site using ASP

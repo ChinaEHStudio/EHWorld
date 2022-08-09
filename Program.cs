@@ -8,12 +8,14 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
                       policy =>
                       {
-                          policy.AllowAnyMethod().AllowCredentials().WithOrigins("https://ehworld-web.vercel.app");
+                          policy.AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
                       });
 });
 
+
 builder.Services.AddDbContext<EhWorldContext>(options =>
-  options.UseSqlServer(builder.Configuration.GetConnectionString("EhWorldContext")));
+  options.UseMySql("Server=o4fj9i0lc4qk.us-east-1.psdb.cloud;Database=dblearn;user=j1u8i371zwas;password=pscale_pw_89K_ePK7QK5PArNrgUz27yQN_9FAkNS3hFgbI2H13K8;SslMode=VerifyFull;", new MySqlServerVersion(new Version(8,0,23))));
+//var connectstring = builder.Configuration.GetConnectionString("EHWorldContext");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -44,7 +46,7 @@ using (var scope = app.Services.CreateScope())
     // DbInitializer.Initialize(context);
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

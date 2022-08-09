@@ -8,6 +8,7 @@
         public int Level { get; set; }
         public string email { get; set; }
         public string? uuiduser { get; set; }
+        public string? uuid { get; set; }
 
         
 
