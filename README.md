@@ -6,7 +6,7 @@ A simple sandbox web site using ASP
 # Run
 
 First,make sure your computer has
-- dotnet6
+- dotnet SDK 6
 
 ## How to get?
 [dotnet6](https://dotnet.microsoft.com)
@@ -20,7 +20,7 @@ First,make sure your computer has
 
 ## run
 ```
-dotnet run
+$ dotnet watch
 ```
 
 
